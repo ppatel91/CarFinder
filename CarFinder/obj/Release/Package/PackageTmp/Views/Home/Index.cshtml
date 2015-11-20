@@ -1,0 +1,217 @@
+﻿
+
+<div class="container">
+    <div class="row module-video">
+        <div style="padding-top:0px; padding-left:px" center>
+            <div ng-app="CarFinderApp" style="padding-top:100px" class="col-lg-12">
+                <div ng-controller="CarFinderController">
+                    <div class="row">
+                        <h2 style="text-align:center; color:lawngreen; font-family:telegrama; letter-spacing:8px">Find Your Dream Car!</h2>
+                    </div><br /><br />
+                    <div class="row">
+                        <!--Choose Year,Make,Model,trim-->
+                        <div class="row" style="padding-left:50px">
+                            <div class="col-md-2 col-md-offset-1" style="text-align:center;">
+                                <div style=" color:lawngreen; font-family:telegrama; letter-spacing:5px">Start Year</div><br />
+                                <div class="row">
+                                    <select class="btn btn-primary dropdown-toggle" style="height:50px; width:150px" data-toggle="dropdown" id="select_year1" ng-options="year for year in years" ng-model="selectedBeginYear" ng-change="getEndYear()"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="text-align:center;">
+                                <div style=" color:lawngreen; font-family:telegrama; letter-spacing:5px">End Year</div><br />
+                                <div>
+                                    <select class="btn btn-primary dropdown-toggle" style="height:50px; width:150px" data-toggle="dropdown" id="select_year2" ng-options="year for year in years" ng-model="selectedEndYear" ng-change="getMakes()"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="text-align:center;">
+                                <div style=" color:lawngreen; font-family:telegrama; letter-spacing:5px">Make</div><br />
+                                <div>
+                                    <select class="btn btn-primary dropdown-toggle" style="height:50px; width:150px" data-toggle="dropdown" id="select_make" ng-options="make for make in makes" ng-model="selectedMake" ng-change="getModels()"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="text-align:center;">
+                                <div style=" color:lawngreen; font-family:telegrama; letter-spacing:5px">Model</div><br />
+                                <div>
+                                    <select class="btn btn-primary dropdown-toggle" style="height:50px; width:150px" data-toggle="dropdown" id="select_model" ng-options="model for model in models" ng-model="selectedModel" ng-change="getTrims()"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="text-align:center;">
+                                <div style=" color:lawngreen; font-family:telegrama; letter-spacing:5px">Trim</div><br />
+                                <div>
+                                    <select class="btn btn-primary dropdown-toggle" style="height:50px; width:150px" data-toggle="dropdown" id="select_trim" ng-options="trim for trim in trims" ng-model="selectedTrim" ng-change="getCars()"></select>
+                                </div>
+                            </div><br /><br />
+                        </div>
+                        <!--CAR DATA MODAL-->
+                        <div class="container">
+                            <div id="myModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog modal-lg">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h1 class="modal-title" style="color:white">Results</h1>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row" ng-repeat="item in cars" style="border:double yellowgreen">
+                                                <div class="row">
+                                                    <h2 style="color:chartreuse; text-align:center">{{item.car.model_year}} {{item.car.make}} {{item.car.model_name}}</h2>
+                                                </div>
+                                                <div style="padding-bottom:25px; padding-left:25px; padding-right:25px">
+                                                    <div class="row">
+                                                        <div class="col-lg-5">
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Year:</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.model_year}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Make:</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.make}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Model:</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.model_name}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Trim:</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.model_trim}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Body Style:</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.body_style}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Engine Pos:</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.engine_position}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Engine (CC): </div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.engine_cc}}</div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="col-lg-1"></div>
+                                                        <div class="col-lg-5">
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Torque(rpm):</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.engine_torque_rpm}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Fuel:</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.engine_fuel}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Drive:</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.drive_type}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Trans:</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.transmission_type}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">Weight (kg):</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.weight_kg}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">lkm(hwy):</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.lkm_hwy}}</div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6" style="color:chartreuse">lkm(city):</div>
+                                                                <div class="col-md-6" style="color:white">{{item.car.lkm_city}}</div>
+                                                            </div>
+                                                        </div>
+                                                    </div><br />
+                                                    <div class="row">
+                                                        <div ng-repeat="image in item.images.responseData.results | limitTo:4">
+                                                            <img class="col-xs-3 img-responsive" ng-src="{{image.url}}">
+                                                        </div>
+                                                    </div>
+                                                </div><br />
+
+
+                                                <div class="panel panel-primary">
+                                                    <div class="row" style="padding-left:15px; padding-right:15px">
+                                                        <div class="btn btn-primary col-lg-12" ng-click="isCollapsed = !isCollapsed" style="font-size:18px" ng-show="hasRecalls(item.recalls.Count)">View Recalls</div>
+                                                    </div>
+                                                    <div collapse="isCollapsed">
+                                                        <div class="panel-body bg-primary">
+                                                            <!--RECALLS-->
+                                                            <div class="row">
+                                                                <div ng-repeat="recall in item.recall.Results">
+                                                                    <div style="border-bottom: double white">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6" style="color:orangered">Recall Number:</div>
+                                                                            <div class="col-lg-6" style="color:white">{{recall.NHTSACampaignNumber}}</div>
+                                                                        </div><br />
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6" style="color:orangered">Report Recieved Date:</div>
+                                                                            <div class="col-lg-6" style="color:white">{{recall.ReportReceivedDate}}</div>
+                                                                        </div><br />
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6" style="color:orangered">Component:</div>
+                                                                            <div class="col-lg-6" style="color:white">{{recall.Component}}</div>
+                                                                        </div><br />
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6" style="color:orangered">Summary:</div>
+                                                                            <div class="col-lg-6" style="color:white">{{recall.Summary}}</div>
+                                                                        </div><br />
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6" style="color:orangered">Consequence:</div>
+                                                                            <div class="col-lg-6" style="color:white">{{recall.Conequence}}</div>
+                                                                        </div><br />
+                                                                        <div class="row">
+                                                                            <div class="col-lg-6" style="color:orangered">Solution:</div>
+                                                                            <div class="col-lg-6" style="color:white">{{recall.Remedy}} </div>
+                                                                        </div>
+                                                                    </div><br /><br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--SCRIPTS FOR APPLICATION-->
+@* Youtube PLayer Parameters *@
+<div class="video-player" data-property="{
+                     videoURL:'https://www.youtube.com/watch?v=qD8rt4VhHL4',
+                     vol:0,
+                     mute:true,
+                     containment:'body',
+                     autoPlay:true,
+                     showControls:false,
+                     mute:true,
+                     startAt:20,
+                     stopAt:125,
+                     opacity:1,
+                     quality: 'hd720',
+                     showYTLogo: false}">
+</div>
+<script>
+    $(function () {
+        $('.video-player').mb_YTPlayer();
+    });
+</script>
+
+<script src="~/Content/YTPlayer/jquery.mb.YTPlayer.js"></script>
+
+
+
+
+
